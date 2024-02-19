@@ -51,9 +51,9 @@ export default function Conversation() {
 
   return (
     <div className="container" style={{width: '40%'}}>
-      <div className="d-grid">
+      <div className="d-grid gap-0 p-0">
         {messages?.map(message => (
-          <div className={"p-2"} key={message.timestamp}>
+          <div className={"p-1 m-0"} key={message.timestamp}>
             <MessageWrapper content={message.content} sender={message.sender} />
           </div>
         ))}
