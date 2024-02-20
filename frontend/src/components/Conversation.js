@@ -2,6 +2,11 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import MessageWrapper from "./Message";
 
+const baseUrl = process.env.API_URL || 'http://localhost:8000'
+console.log(process.env.API_URL)
+console.log(baseUrl)
+const fetchMessagesBaseUrl = `${baseUrl}/conversations`
+
 export default function Conversation() {
   const params =  useParams()
   const [messages, setMessages] = useState([])
@@ -9,7 +14,7 @@ export default function Conversation() {
 
   const fetchMessages = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:8000/conversations/${params.id}`);
+      const response = await fetch(`${fetchMessagesBaseUrl}/${params.id}`);
       const conversation = await response.json();
       setMessages(conversation.messages);
     } catch (error) {
@@ -31,7 +36,7 @@ export default function Conversation() {
         sender: "user"
       }
 
-      const response = await fetch(`http://localhost:8000/conversations/${params.id}/messages`, {
+      const response = await fetch(`${fetchMessagesBaseUrl}/${params.id}/messages`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

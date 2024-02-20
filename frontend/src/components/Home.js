@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+const baseUrl = process.env.API_URL || 'http://localhost:8000'
+console.log(process.env.API_URL)
+console.log(baseUrl)
+const fetchConversationsUrl = `${baseUrl}/conversations`
+const startConversationUrl = `${baseUrl}/conversations/create`
+
+
 export default function Home() {
     const [conversations, setConversations] = useState([])
     const navigate = useNavigate()
@@ -8,7 +15,7 @@ export default function Home() {
     useEffect(() => {
         const fetchConversations = async () => {
             try {
-                const response = await fetch('http://localhost:8000/conversations')
+                const response = await fetch(fetchConversationsUrl)
                 
                 if (!response.ok) {
                     throw new Error(`Error fetching conversations: ${response.status}`);
@@ -27,7 +34,7 @@ export default function Home() {
 
     const createConversation = async () => {
         try {
-            const response = await fetch('http://localhost:8000/conversations/create', {
+            const response = await fetch(startConversationUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
